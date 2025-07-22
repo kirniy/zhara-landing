@@ -158,6 +158,13 @@ FC/DC 18+
     setSelectedEvent(event)
     setShowTicketMenu(false)
     setEventVideoMuted(true)
+    
+    // Re-initialize TC widget for dynamically added elements
+    setTimeout(() => {
+      if (window.ticketsCloudWidget && window.ticketsCloudWidget.init) {
+        window.ticketsCloudWidget.init();
+      }
+    }, 100);
   }
 
   const handleBookingClick = () => {
@@ -245,7 +252,7 @@ FC/DC 18+
       {/* Background Video */}
       <video 
         className="background-video"
-        src={bgVideo}
+        src="/bgvideo.mp4"
         autoPlay
         loop
         muted
@@ -406,16 +413,11 @@ FC/DC 18+
                 <div 
                   data-tc-event={selectedEvent.tcEvent}
                   data-tc-token={selectedEvent.tcToken}
-                  style={{ display: 'block', width: '100%' }}
+                  style={{ display: 'inline-block', width: '100%' }}
                 >
                   <button 
                     className="buy-ticket-button"
                     style={{ width: '100%' }}
-                    onTouchStart={() => {
-                      if (window.Telegram?.WebApp?.HapticFeedback) {
-                        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-                      }
-                    }}
                   >
                     КУПИТЬ БИЛЕТ
                   </button>
