@@ -16,7 +16,6 @@ function App() {
   const [eventVideoMuted, setEventVideoMuted] = useState(true)
   const [showFullscreenVideo, setShowFullscreenVideo] = useState(false)
   const [showBookingSubmenu, setShowBookingSubmenu] = useState(false)
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false)
   const [showSplash, setShowSplash] = useState(true)
   const [bubblesAnimation, setBubblesAnimation] = useState(true)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
@@ -25,11 +24,6 @@ function App() {
   const submenuRef = useRef(null)
   const circleVideoRef = useRef(null)
 
-  useEffect(() => {
-    const resizeHandler = () => setIsMobile(window.innerWidth <= 768)
-    window.addEventListener('resize', resizeHandler)
-    return () => window.removeEventListener('resize', resizeHandler)
-  }, [])
 
   useEffect(() => {
     // Set Telegram WebApp header color to summer blue
@@ -413,22 +407,23 @@ FC/DC 18+
               
               <p className="event-description">{selectedEvent.description}</p>
               
-              <button 
-                className="buy-ticket-button"
+              <div 
                 data-tc-event={selectedEvent.tcEvent}
                 data-tc-token={selectedEvent.tcToken}
-                style={{ width: '100%' }}
-                onClick={() => {
-                  if (!isMobile) {
-                    const url = selectedEvent.id === 'july25' 
-                      ? 'https://63206ee78749097c592a6697.ticketscloud.org/e/687267a052cc6634496104ba?partner_id=63206ee78749097c592a6697'
-                      : 'https://63206ee78749097c592a6697.ticketscloud.org/e/687268af20e08ad668516801?partner_id=63206ee78749097c592a6697';
-                    window.open(url, '_blank');
-                  }
-                }}
+                style={{ display: 'block', width: '100%' }}
               >
-                КУПИТЬ БИЛЕТ
-              </button>
+                <button 
+                  className="buy-ticket-button"
+                  style={{ width: '100%' }}
+                  onTouchStart={() => {
+                    if (window.Telegram?.WebApp?.HapticFeedback) {
+                      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+                    }
+                  }}
+                >
+                  КУПИТЬ БИЛЕТ
+                </button>
+              </div>
             </div>
           </div>
         </div>
