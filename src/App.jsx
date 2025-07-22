@@ -1,13 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Ticket, Calendar, Send, Volume2, VolumeX, Maximize2, X, Waves, Phone, MessageCircle } from 'lucide-react'
 import './App.css'
-import AnimatedMedia from '@/components/AnimatedMedia.jsx'
 
-// Import video assets
-import bgVideo from '/bgvideo.mp4'
-import posterVideo from '/poster.webm'
-import circleVideo1 from '/circle1.mp4'
-import circleVideo2 from '/circle2.mp4'
+// Import assets
 import logoImage from '/logozhara.png'
 
 function App() {
@@ -43,7 +38,7 @@ function App() {
     }, 3000);
     
     // Randomly select circle video
-    setCircleVideoSrc(Math.random() < 0.5 ? circleVideo1 : circleVideo2);
+    setCircleVideoSrc(Math.random() < 0.5 ? '/circle1.mp4' : '/circle2.mp4');
     
     return () => {
       clearTimeout(splashTimer);
@@ -85,8 +80,6 @@ function App() {
 
 Готовы прожариться по полной? 🤩
 
-💸Билеты тут
-
 FC/DC 18+
 
 С собой оригиналы документов удостоверяющие личность. 
@@ -96,8 +89,8 @@ FC/DC 18+
 *билет и наличие брони столов дает право пройти без очереди, но не отменяет FC 
 
 📍Конюшенная 2В`,
-      poster: posterVideo,
-      video: posterVideo,
+      poster: '/poster.webm',
+      video: '/poster.webm',
       tcEvent: '687267a052cc6634496104ba',
       tcToken: 'eyJhbGciOiJIUzI1NiIsImlzcyI6InRpY2tldHNjbG91ZC5ydSIsInR5cCI6IkpXVCJ9.eyJwIjoiNjMyMDZlZTc4NzQ5MDk3YzU5MmE2Njk3In0.o8XKf5PO_f33Eg3RIeUe2PYBEeuy4o2yI4vh6qQ21T8',
       activities: [
@@ -136,8 +129,8 @@ FC/DC 18+
 *билет и наличие брони столов дает право пройти без очереди, но не отменяет FC
 
 📍Конюшенная 2В`,
-      poster: posterVideo,
-      video: posterVideo,
+      poster: '/poster.webm',
+      video: '/poster.webm',
       tcEvent: '687268af20e08ad668516801',
       tcToken: 'eyJhbGciOiJIUzI1NiIsImlzcyI6InRpY2tldHNjbG91ZC5ydSIsInR5cCI6IkpXVCJ9.eyJwIjoiNjMyMDZlZTc4NzQ5MDk3YzU5MmE2Njk3In0.o8XKf5PO_f33Eg3RIeUe2PYBEeuy4o2yI4vh6qQ21T8',
       activities: [
@@ -299,7 +292,7 @@ FC/DC 18+
       <div className="app-container">
         {/* Summer Logo */}
         <div className="summer-logo">
-          <img src={logoImage} alt="VNVNC ЖАРА" className="logo-image" />
+          <img src={logoImage} alt="VNVNC ЖАРА" className="logo-image" loading="eager" />
         </div>
 
         {/* Main Buttons */}
@@ -391,38 +384,42 @@ FC/DC 18+
             </div>
             
             <div className="event-info">
-              <h3 className="event-title">{selectedEvent.title}</h3>
-              <p className="event-date-time">{selectedEvent.date} в {selectedEvent.time}</p>
+              <div className="event-info-content">
+                <h3 className="event-title">{selectedEvent.title}</h3>
+                <p className="event-date-time">{selectedEvent.date} в {selectedEvent.time}</p>
+                
+                {selectedEvent.activities && (
+                  <div className="activities-section">
+                    <h4>Активности:</h4>
+                    <ul className="activities-list">
+                      {selectedEvent.activities.map((activity, index) => (
+                        <li key={index}>{activity}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                <p className="event-description">{selectedEvent.description}</p>
+              </div>
               
-              {selectedEvent.activities && (
-                <div className="activities-section">
-                  <h4>Активности:</h4>
-                  <ul className="activities-list">
-                    {selectedEvent.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              <p className="event-description">{selectedEvent.description}</p>
-              
-              <div 
-                data-tc-event={selectedEvent.tcEvent}
-                data-tc-token={selectedEvent.tcToken}
-                style={{ display: 'block', width: '100%' }}
-              >
-                <button 
-                  className="buy-ticket-button"
-                  style={{ width: '100%' }}
-                  onTouchStart={() => {
-                    if (window.Telegram?.WebApp?.HapticFeedback) {
-                      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-                    }
-                  }}
+              <div className="event-info-sticky">
+                <div 
+                  data-tc-event={selectedEvent.tcEvent}
+                  data-tc-token={selectedEvent.tcToken}
+                  style={{ display: 'block', width: '100%' }}
                 >
-                  КУПИТЬ БИЛЕТ
-                </button>
+                  <button 
+                    className="buy-ticket-button"
+                    style={{ width: '100%' }}
+                    onTouchStart={() => {
+                      if (window.Telegram?.WebApp?.HapticFeedback) {
+                        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+                      }
+                    }}
+                  >
+                    КУПИТЬ БИЛЕТ
+                  </button>
+                </div>
               </div>
             </div>
           </div>
