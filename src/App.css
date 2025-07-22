@@ -15,8 +15,8 @@ body {
 
 /* Circle Video */
 .circle-video-wrapper {
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   margin: -20px auto 30px;
   border-radius: 50%;
   overflow: hidden;
@@ -24,18 +24,19 @@ body {
     0 0 0 4px rgba(255, 255, 255, 0.1),
     0 8px 32px rgba(0, 153, 255, 0.4),
     inset 0 0 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   background: #000;
   position: relative;
   border: 2px solid rgba(0, 153, 255, 0.3);
+  transform-origin: center;
+  will-change: transform, width, height;
 }
 
 .circle-video-wrapper.expanded {
-  width: 350px;
-  height: 350px;
-  margin: -30px auto 40px;
-  transform: scale(1.05);
+  width: 400px;
+  height: 400px;
+  margin: -40px auto 40px;
   box-shadow: 
     0 0 0 6px rgba(255, 255, 255, 0.2),
     0 12px 48px rgba(0, 153, 255, 0.6),
@@ -255,13 +256,14 @@ body {
 /* Summer Logo */
 .summer-logo {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  margin-top: -3rem;
   animation: float 3s ease-in-out infinite;
 }
 
 .logo-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   height: auto;
   filter: drop-shadow(0 0 30px rgba(255, 107, 107, 0.5));
 }
@@ -865,7 +867,12 @@ body {
   }
   
   .logo-image {
-    max-width: 300px;
+    max-width: 330px;
+  }
+  
+  .summer-logo {
+    margin-top: -2rem;
+    margin-bottom: 1.5rem;
   }
   
   .summer-button {
@@ -878,14 +885,14 @@ body {
   }
   
   .circle-video-wrapper {
-    width: 120px;
-    height: 120px;
+    width: 144px;
+    height: 144px;
     margin: 1.5rem auto;
   }
   
   .circle-video-wrapper.expanded {
-    width: 170px;
-    height: 170px;
+    width: 196px;
+    height: 196px;
   }
   
   .event-video-container {

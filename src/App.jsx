@@ -171,7 +171,7 @@ FC/DC 18+
 
   const handleTicketClick = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setShowTicketMenu(true)
   }
@@ -182,7 +182,7 @@ FC/DC 18+
     console.log('[TC Debug] TC Token:', event.tcToken);
     
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setSelectedEvent(event)
     setShowTicketMenu(false)
@@ -242,11 +242,11 @@ FC/DC 18+
 
   const handleBookingClick = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     
     // Check if on desktop (not in Telegram WebApp and screen is wide enough)
-    const isDesktop = !window.Telegram?.WebApp && window.innerWidth > 768;
+    const isDesktop = !window.Telegram?.WebApp?.initData && window.innerWidth > 768;
     
     if (isDesktop) {
       // Open booking form on desktop
@@ -265,7 +265,7 @@ FC/DC 18+
 
   const openTelegramChannel = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
       window.Telegram.WebApp.openTelegramLink('https://t.me/vnvncbattlebot');
@@ -277,28 +277,28 @@ FC/DC 18+
 
   const toggleEventMute = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setEventVideoMuted(!eventVideoMuted)
   }
 
   const showFullscreen = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setShowFullscreenVideo(true)
   }
 
   const closeFullscreenVideo = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setShowFullscreenVideo(false)
   }
 
   const toggleCircleVideoMute = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setCircleVideoMuted(!circleVideoMuted)
   }
@@ -453,7 +453,7 @@ FC/DC 18+
             <div className="event-info">
               <div className="event-info-content">
                 <h3 className="event-title">{selectedEvent.title}</h3>
-                <p className="event-date-time">{selectedEvent.date} в {selectedEvent.time}</p>
+                <p className="event-date-time">{selectedEvent.date.split(', ')[1].charAt(0).toUpperCase() + selectedEvent.date.split(', ')[1].slice(1)} в {selectedEvent.time}</p>
                 
                 {selectedEvent.activities && (
                   <div className="activities-section">
@@ -480,7 +480,7 @@ FC/DC 18+
                     style={{ width: '100%' }}
                     onTouchStart={() => {
                       if (window.Telegram?.WebApp?.HapticFeedback) {
-                        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+                        window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
                       }
                     }}
                   >
