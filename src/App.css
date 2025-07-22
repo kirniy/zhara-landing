@@ -515,17 +515,17 @@ body {
 }
 
 .ticket-menu {
-  background: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(40px) saturate(150%);
-  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  background: rgba(25, 25, 25, 0.6);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: 32px;
   padding: 2.5rem;
   max-width: 500px;
   width: 100%;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -643,9 +643,9 @@ body {
 }
 
 .event-details {
-  background: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(40px) saturate(150%);
-  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  background: rgba(25, 25, 25, 0.6);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: 32px;
   max-width: 800px;
   width: 100%;
@@ -654,8 +654,8 @@ body {
   flex-direction: column;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -675,7 +675,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #000;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .video-controls {
@@ -723,11 +723,12 @@ body {
 .event-info-sticky {
   position: sticky;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(10px);
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   padding: 1.5rem 2rem;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .event-title {
@@ -1053,6 +1054,6 @@ body {
   
   .event-details,
   .ticket-menu {
-    background: rgba(0, 0, 0, 0.95) \!important;
+    background: rgba(20, 20, 20, 0.9) \!important;
   }
 }
