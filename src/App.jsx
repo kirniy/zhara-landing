@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Ticket, Calendar, Send, Volume2, VolumeX, Maximize2, X, Waves, Phone, MessageCircle } from 'lucide-react'
+import { Ticket, Calendar, Send, Volume2, VolumeX, Maximize2, X, Phone, MessageCircle } from 'lucide-react'
 import './App.css'
 
 // Import assets
@@ -15,15 +15,18 @@ function App() {
   const [bubblesAnimation, setBubblesAnimation] = useState(true)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
   const [circleVideoSrc, setCircleVideoSrc] = useState(null)
+  const [mediaLoaded, setMediaLoaded] = useState(false)
+  const [loadingProgress, setLoadingProgress] = useState(0)
   const bookingBtnRef = useRef(null)
   const submenuRef = useRef(null)
   const circleVideoRef = useRef(null)
+  const bgVideoRef = useRef(null)
 
 
   useEffect(() => {
-    // Set Telegram WebApp header color to summer blue
+    // Set Telegram WebApp header color to red
     if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.setHeaderColor('#0099ff');
+      window.Telegram.WebApp.setHeaderColor('#f6121a');
     }
     
     // Dispatch custom userGesture event on first actual user interaction to unlock videos
@@ -32,17 +35,49 @@ function App() {
     };
     document.addEventListener('pointerdown', gestureHandler, { once: true });
     
-    // Hide splash screen after 3 seconds
-    const splashTimer = setTimeout(() => {
-      setShowSplash(false);
-    }, 3000);
-    
     // Randomly select circle video
     setCircleVideoSrc(Math.random() < 0.5 ? '/circle1.mp4' : '/circle2.mp4');
     
-    return () => {
-      clearTimeout(splashTimer);
+    // Preload all media assets
+    const mediaAssets = [
+      '/logozhara.png',
+      '/bgvideo.mp4',
+      '/circle1.mp4',
+      '/circle2.mp4',
+      '/poster.webm'
+    ];
+    
+    let loadedCount = 0;
+    const totalAssets = mediaAssets.length;
+    
+    const checkAllLoaded = () => {
+      loadedCount++;
+      setLoadingProgress((loadedCount / totalAssets) * 100);
+      if (loadedCount === totalAssets) {
+        setMediaLoaded(true);
+        // Wait a bit to show complete loading, then hide splash
+        setTimeout(() => {
+          setShowSplash(false);
+        }, 500);
+      }
     };
+    
+    // Preload images
+    mediaAssets.forEach(src => {
+      if (src.endsWith('.png') || src.endsWith('.jpg') || src.endsWith('.webp')) {
+        const img = new Image();
+        img.onload = checkAllLoaded;
+        img.onerror = checkAllLoaded; // Count errors too to avoid infinite loading
+        img.src = src;
+      } else if (src.endsWith('.mp4') || src.endsWith('.webm')) {
+        // For videos, we just check if they can start loading
+        const video = document.createElement('video');
+        video.onloadeddata = checkAllLoaded;
+        video.onerror = checkAllLoaded;
+        video.src = src;
+        video.load();
+      }
+    });
   }, [])
 
   useEffect(() => {
@@ -238,12 +273,18 @@ FC/DC 18+
     <>
       {/* Splash Screen */}
       {showSplash && (
-        <div className="splash-screen">
+        <div className={`splash-screen ${mediaLoaded ? 'hide' : ''}`}>
           <div className="splash-content">
-            <h1 className="splash-title">ЖАРА</h1>
-            <p className="splash-subtitle">25-26 ИЮЛЯ</p>
-            <div className="splash-waves">
-              <Waves size={48} />
+            <img 
+              src={logoImage} 
+              alt="ЖАРА" 
+              className="splash-logo"
+            />
+            <div className="loading-bar">
+              <div 
+                className="loading-progress" 
+                style={{ width: `${loadingProgress}%` }}
+              />
             </div>
           </div>
         </div>
@@ -251,6 +292,7 @@ FC/DC 18+
 
       {/* Background Video */}
       <video 
+        ref={bgVideoRef}
         className="background-video"
         src="/bgvideo.mp4"
         autoPlay
@@ -276,31 +318,31 @@ FC/DC 18+
         </div>
       )}
 
-      {/* Circle Video */}
-      {circleVideoSrc && (
-        <div className={`circle-video-container ${!circleVideoMuted ? 'expanded' : ''}`}>
-          <video 
-            ref={circleVideoRef}
-            className="circle-video"
-            src={circleVideoSrc}
-            autoPlay
-            loop
-            muted={circleVideoMuted}
-            playsInline
-            onClick={toggleCircleVideoMute}
-          />
-          <div className="circle-video-overlay" onClick={toggleCircleVideoMute}>
-            {circleVideoMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-          </div>
-        </div>
-      )}
-
       {/* Main Content Container */}
       <div className="app-container">
         {/* Summer Logo */}
         <div className="summer-logo">
           <img src={logoImage} alt="VNVNC ЖАРА" className="logo-image" loading="eager" />
         </div>
+
+        {/* Circle Video - Positioned under logo */}
+        {circleVideoSrc && (
+          <div className={`circle-video-wrapper ${!circleVideoMuted ? 'expanded' : ''}`}>
+            <video 
+              ref={circleVideoRef}
+              className="circle-video"
+              src={circleVideoSrc}
+              autoPlay
+              loop
+              muted={circleVideoMuted}
+              playsInline
+              onClick={toggleCircleVideoMute}
+            />
+            <div className="circle-video-overlay" onClick={toggleCircleVideoMute}>
+              {circleVideoMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+            </div>
+          </div>
+        )}
 
         {/* Main Buttons */}
         <div className="main-buttons">
