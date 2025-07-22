@@ -3,7 +3,7 @@ import { Ticket, Calendar, Send, Volume2, VolumeX, Maximize2, X, Phone, MessageC
 import './App.css'
 
 // Import assets
-import logoImage from '/logozhara.png'
+import logoImage from '/zharaloader.svg'
 
 function App() {
   const [showTicketMenu, setShowTicketMenu] = useState(false)
@@ -11,7 +11,6 @@ function App() {
   const [eventVideoMuted, setEventVideoMuted] = useState(true)
   const [showFullscreenVideo, setShowFullscreenVideo] = useState(false)
   const [showSplash, setShowSplash] = useState(true)
-  const [bubblesAnimation, setBubblesAnimation] = useState(true)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
   const [circleVideoSrc, setCircleVideoSrc] = useState(null)
   const [mediaLoaded, setMediaLoaded] = useState(false)
@@ -48,7 +47,7 @@ function App() {
     
     // Preload all media assets
     const mediaAssets = [
-      '/logozhara.png',
+      '/zharaloader.svg',
       '/bgvideo.mp4',
       '/poster.webm'
       // Don't preload circle videos - load on demand
@@ -303,6 +302,20 @@ FC/DC 18+
       {/* Splash Screen */}
       {showSplash && (
         <div className={`splash-screen ${mediaLoaded ? 'hide' : ''}`}>
+          {/* Animated Bubbles for splash */}
+          <div className="splash-bubbles-container">
+            {[...Array(15)].map((_, i) => (
+              <div 
+                key={i} 
+                className="splash-bubble" 
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  animationDuration: `${5 + Math.random() * 5}s`
+                }}
+              />
+            ))}
+          </div>
           <div className="splash-content">
             <img 
               src="/zharaloader.svg" 
@@ -330,22 +343,6 @@ FC/DC 18+
         playsInline
       />
 
-      {/* Animated Bubbles */}
-      {bubblesAnimation && (
-        <div className="bubbles-container">
-          {[...Array(20)].map((_, i) => (
-            <div 
-              key={i} 
-              className="bubble" 
-              style={{
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${5 + Math.random() * 5}s`
-              }}
-            />
-          ))}
-        </div>
-      )}
 
       {/* Main Content Container */}
       <div className="app-container">
