@@ -197,6 +197,13 @@ FC/DC 18+
     setTimeout(() => {
       if (window.ticketsCloudWidget && window.ticketsCloudWidget.init) {
         window.ticketsCloudWidget.init();
+      } else if (window.ticketsCloudWidget && window.ticketsCloudWidget.destroy) {
+        // If init doesn't work, try destroy and let it reinitialize
+        window.ticketsCloudWidget.destroy();
+        setTimeout(() => {
+          // Force re-run the widget initialization by dispatching a DOM ready event
+          document.dispatchEvent(new Event('DOMContentLoaded'));
+        }, 50);
       }
     }, 100);
   }
@@ -350,30 +357,32 @@ FC/DC 18+
             <span>БИЛЕТЫ</span>
           </button>
           
-          <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
-            <Calendar size={24} className="button-icon" />
-            <span>БРОНЬ СТОЛОВ</span>
-          </button>
+          <div style={{ position: 'relative', width: '100%' }}>
+            <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
+              <Calendar size={24} className="button-icon" />
+              <span>БРОНЬ СТОЛОВ</span>
+            </button>
+            
+            {/* Booking Submenu */}
+            {showBookingSubmenu && (
+              <div className="booking-submenu" ref={submenuRef}>
+                <button onClick={openPhoneNumber} className="submenu-item">
+                  <Phone size={20} />
+                  <span>Позвонить</span>
+                </button>
+                <button onClick={openTelegramBot} className="submenu-item">
+                  <MessageCircle size={20} />
+                  <span>Telegram бот</span>
+                </button>
+              </div>
+            )}
+          </div>
 
           <button className="summer-button telegram-button" onClick={openTelegramChannel}>
             <Send size={24} className="button-icon" />
             <span>TELEGRAM</span>
           </button>
         </div>
-
-        {/* Booking Submenu */}
-        {showBookingSubmenu && (
-          <div className="booking-submenu" ref={submenuRef}>
-            <button onClick={openPhoneNumber} className="submenu-item">
-              <Phone size={20} />
-              <span>Позвонить</span>
-            </button>
-            <button onClick={openTelegramBot} className="submenu-item">
-              <MessageCircle size={20} />
-              <span>Telegram бот</span>
-            </button>
-          </div>
-        )}
 
       </div>
 
