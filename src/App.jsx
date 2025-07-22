@@ -372,13 +372,13 @@ FC/DC 18+
             </button>
             
             <div className="event-video-container">
-              <AnimatedMedia 
+              <video 
                 className="event-video"
-                mediaSrc={selectedEvent.video}
-                isVideo={true}
+                src={selectedEvent.video}
                 muted={eventVideoMuted}
                 loop={true}
                 autoPlay={true}
+                playsInline
               />
               <div className="video-controls">
                 <button onClick={toggleEventMute} className="control-button">
