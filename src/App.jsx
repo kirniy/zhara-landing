@@ -345,16 +345,10 @@ FC/DC 18+
 
         {/* Main Buttons */}
         <div className="main-buttons">
-          <div
-            data-tc-event="687267a052cc6634496104ba"
-            data-tc-token="eyJhbGciOiJIUzI1NiIsImlzcyI6InRpY2tldHNjbG91ZC5ydSIsInR5cCI6IkpXVCJ9.eyJwIjoiNjMyMDZlZTc4NzQ5MDk3YzU5MmE2Njk3In0.o8XKf5PO_f33Eg3RIeUe2PYBEeuy4o2yI4vh6qQ21T8"
-            style={{ display: 'inline-block' }}
-          >
-            <button className="summer-button ticket-button">
-              <Ticket size={24} className="button-icon" />
-              <span>БИЛЕТЫ</span>
-            </button>
-          </div>
+          <button className="summer-button ticket-button" onClick={handleTicketClick}>
+            <Ticket size={24} className="button-icon" />
+            <span>БИЛЕТЫ</span>
+          </button>
           
           <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
             <Calendar size={24} className="button-icon" />
@@ -465,6 +459,11 @@ FC/DC 18+
                   <button 
                     className="buy-ticket-button"
                     style={{ width: '100%' }}
+                    onTouchStart={() => {
+                      if (window.Telegram?.WebApp?.HapticFeedback) {
+                        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+                      }
+                    }}
                   >
                     КУПИТЬ БИЛЕТ
                   </button>
