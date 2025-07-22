@@ -15,9 +15,12 @@ function App() {
   const [circleVideoSrc, setCircleVideoSrc] = useState(null)
   const [mediaLoaded, setMediaLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [bgVideoIndex, setBgVideoIndex] = useState(0)
   const bookingBtnRef = useRef(null)
   const circleVideoRef = useRef(null)
   const bgVideoRef = useRef(null)
+  
+  const bgVideos = ['/bgvideo.mp4', '/poster.webm', '/circle1.mp4', '/circle2.mp4']
 
 
   useEffect(() => {
@@ -304,6 +307,13 @@ FC/DC 18+
     }
     setCircleVideoMuted(!circleVideoMuted)
   }
+  
+  const handleLogoClick = () => {
+    if (window.Telegram?.WebApp?.HapticFeedback) {
+      window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+    }
+    setBgVideoIndex((prev) => (prev + 1) % bgVideos.length)
+  }
 
   return (
     <>
@@ -344,19 +354,26 @@ FC/DC 18+
       <video 
         ref={bgVideoRef}
         className="background-video"
-        src="/bgvideo.mp4"
+        src={bgVideos[bgVideoIndex]}
         autoPlay
         loop
         muted
         playsInline
+        key={bgVideoIndex}
       />
 
 
       {/* Main Content Container */}
       <div className="app-container">
         {/* Summer Logo */}
-        <div className="summer-logo">
+        <div className="summer-logo" onClick={handleLogoClick}>
           <img src={logoImage} alt="VNVNC ЖАРА" className="logo-image" loading="eager" />
+          <div className="logo-indicator">
+            <div className="indicator-dot" data-active={bgVideoIndex === 0} />
+            <div className="indicator-dot" data-active={bgVideoIndex === 1} />
+            <div className="indicator-dot" data-active={bgVideoIndex === 2} />
+            <div className="indicator-dot" data-active={bgVideoIndex === 3} />
+          </div>
         </div>
 
         {/* Circle Video - Positioned under logo */}
