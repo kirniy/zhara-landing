@@ -62,17 +62,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.4;
+  opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-/* Hide overlay when unmuted unless hovering */
-.circle-video-wrapper.expanded .circle-video-overlay {
-  opacity: 0;
+/* Show overlay when visible or on hover */
+.circle-video-overlay.visible {
+  opacity: 0.4;
+  pointer-events: all;
 }
 
 .circle-video-wrapper:hover .circle-video-overlay {
   opacity: 0.8;
+  pointer-events: all;
 }
 
 .circle-video-overlay svg {
@@ -500,8 +503,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px) saturate(120%);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -511,16 +515,17 @@ body {
 }
 
 .ticket-menu {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(15, 15, 15, 0.85);
   backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
   border-radius: 32px;
   padding: 2.5rem;
   max-width: 500px;
   width: 100%;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -625,8 +630,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(30px) saturate(120%);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -637,8 +643,9 @@ body {
 }
 
 .event-details {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(15, 15, 15, 0.85);
   backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
   border-radius: 32px;
   max-width: 800px;
   width: 100%;
@@ -647,8 +654,8 @@ body {
   flex-direction: column;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -1035,5 +1042,17 @@ body {
   
   .activities-list {
     grid-template-columns: 1fr;
+  }
+}
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .event-details-overlay,
+  .ticket-menu-overlay {
+    background: rgba(0, 0, 0, 0.85) \!important;
+  }
+  
+  .event-details,
+  .ticket-menu {
+    background: rgba(0, 0, 0, 0.95) \!important;
   }
 }

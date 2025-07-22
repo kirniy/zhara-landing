@@ -16,9 +16,11 @@ function App() {
   const [mediaLoaded, setMediaLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [bgVideoIndex, setBgVideoIndex] = useState(0)
+  const [showCircleControls, setShowCircleControls] = useState(false)
   const bookingBtnRef = useRef(null)
   const circleVideoRef = useRef(null)
   const bgVideoRef = useRef(null)
+  const controlsTimeoutRef = useRef(null)
   
   const bgVideos = ['/bgvideo.mp4', '/poster.webm', '/circle1.mp4', '/circle2.mp4']
 
@@ -306,6 +308,21 @@ FC/DC 18+
       window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setCircleVideoMuted(!circleVideoMuted)
+    
+    // Show controls
+    setShowCircleControls(true)
+    
+    // Clear existing timeout
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current)
+    }
+    
+    // Hide controls after 1.5s if unmuted
+    if (circleVideoMuted) { // Will be unmuted after state update
+      controlsTimeoutRef.current = setTimeout(() => {
+        setShowCircleControls(false)
+      }, 1500)
+    }
   }
   
   const handleLogoClick = () => {
@@ -389,7 +406,10 @@ FC/DC 18+
               playsInline
               onClick={toggleCircleVideoMute}
             />
-            <div className="circle-video-overlay" onClick={toggleCircleVideoMute}>
+            <div 
+              className={`circle-video-overlay ${(!circleVideoMuted && showCircleControls) || circleVideoMuted ? 'visible' : ''}`} 
+              onClick={toggleCircleVideoMute}
+            >
               {circleVideoMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
             </div>
           </div>
