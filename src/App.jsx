@@ -205,26 +205,46 @@ FC/DC 18+
       if (window.ticketsCloudWidget && window.ticketsCloudWidget.init) {
         console.log('[TC Debug] Calling ticketsCloudWidget.init()');
         window.ticketsCloudWidget.init();
-      } else if (window.ticketsCloudWidget && window.ticketsCloudWidget.destroy) {
-        console.log('[TC Debug] Init not available, trying destroy/reinit approach');
-        // If init doesn't work, try destroy and let it reinitialize
-        window.ticketsCloudWidget.destroy();
+        
+        // After init, check if widget processed our element
         setTimeout(() => {
-          // Force re-run the widget initialization by dispatching a DOM ready event
-          console.log('[TC Debug] Dispatching DOMContentLoaded event');
-          document.dispatchEvent(new Event('DOMContentLoaded'));
-        }, 50);
+          const tcIframe = document.querySelector('.tc-widget-frame_popup');
+          const tcButton = tcWrapper?.querySelector('button');
+          
+          if (!tcIframe && tcButton) {
+            console.log('[TC Debug] Widget didn\'t process our element, setting up manual click handler');
+            
+            // Add click handler directly to our button
+            const handleBuyClick = (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('[TC Debug] Manual buy button clicked');
+              
+              // Create a synthetic event that bubbles up properly
+              const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+              });
+              
+              // Dispatch the event on the wrapper which has the TC attributes
+              tcWrapper.dispatchEvent(clickEvent);
+            };
+            
+            tcButton.removeEventListener('click', handleBuyClick);
+            tcButton.addEventListener('click', handleBuyClick);
+          }
+        }, 500);
       } else {
-        console.log('[TC Debug] TC widget not available at all');
+        console.log('[TC Debug] TC widget not available');
       }
       
-      // Check if widget picked up our element after init
-      setTimeout(() => {
-        const tcButton = tcWrapper?.querySelector('button');
-        console.log('[TC Debug] Button inside TC wrapper:', tcButton);
-        console.log('[TC Debug] TC wrapper classes:', tcWrapper?.className);
-        console.log('[TC Debug] TC wrapper parent:', tcWrapper?.parentNode);
-      }, 200);
+      // Debug what's inside the wrapper
+      if (tcWrapper) {
+        console.log('[TC Debug] Button inside TC wrapper:', tcWrapper.querySelector('button'));
+        console.log('[TC Debug] TC wrapper classes:', tcWrapper.className);
+        console.log('[TC Debug] TC wrapper parent:', tcWrapper.parentNode);
+      }
     }, 100);
   }
 
@@ -232,11 +252,8 @@ FC/DC 18+
     if (window.Telegram?.WebApp?.HapticFeedback) {
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
-    if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
-      window.Telegram.WebApp.openTelegramLink('https://t.me/iv?url=tel:+79214104440');
-    } else {
-      window.location.href = 'tel:+79214104440';
-    }
+    // Direct phone call without using Telegram instant view
+    window.location.href = 'tel:+79214104440';
   }
 
   // Removed unused phone and bot functions
