@@ -437,11 +437,21 @@ FC/DC 18+
 
       {/* Ticket Menu */}
       {showTicketMenu && (
-        <div className="ticket-menu-overlay" onClick={() => setShowTicketMenu(false)}>
+        <div className="ticket-menu-overlay" onClick={() => {
+          if (window.Telegram?.WebApp?.HapticFeedback) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+          }
+          setShowTicketMenu(false)
+        }}>
           <div className="ticket-menu" onClick={(e) => e.stopPropagation()}>
             <div className="ticket-menu-header">
               <h2>ВЫБЕРИТЕ ДЕНЬ</h2>
-              <button className="close-button" onClick={() => setShowTicketMenu(false)}>
+              <button className="close-button" onClick={() => {
+                if (window.Telegram?.WebApp?.HapticFeedback) {
+                  window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+                }
+                setShowTicketMenu(false)
+              }}>
                 <X size={24} />
               </button>
             </div>
@@ -464,9 +474,19 @@ FC/DC 18+
 
       {/* Selected Event Details */}
       {selectedEvent && (
-        <div className="event-details-overlay" onClick={() => setSelectedEvent(null)}>
+        <div className="event-details-overlay" onClick={() => {
+          if (window.Telegram?.WebApp?.HapticFeedback) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+          }
+          setSelectedEvent(null)
+        }}>
           <div className="event-details" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={() => setSelectedEvent(null)}>
+            <button className="close-button" onClick={() => {
+              if (window.Telegram?.WebApp?.HapticFeedback) {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+              }
+              setSelectedEvent(null)
+            }}>
               <X size={24} />
             </button>
             

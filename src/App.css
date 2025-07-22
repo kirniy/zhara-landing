@@ -351,47 +351,89 @@ body {
   border: none;
   border-radius: 100px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
   color: #fff;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.15) 0%, 
-    rgba(255, 255, 255, 0.08) 100%);
+    rgba(255, 255, 255, 0.25) 0%, 
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.1) 100%);
   box-shadow: 
-    0 4px 24px rgba(0, 0, 0, 0.12),
-    0 1px 3px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    0 8px 32px rgba(255, 255, 255, 0.15),
+    0 4px 16px rgba(255, 255, 255, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .summer-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, 
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%);
+  opacity: 0;
+  transform: rotate(45deg) translateX(-100%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Iridescent holographic effect */
+.summer-button::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.1) 50%, 
-    rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(125deg,
+    rgba(255, 71, 255, 0.2) 0%,
+    rgba(71, 255, 255, 0.2) 25%,
+    rgba(255, 255, 71, 0.2) 50%,
+    rgba(255, 71, 255, 0.2) 75%,
+    rgba(71, 255, 255, 0.2) 100%);
+  background-size: 300% 300%;
+  animation: iridescent 8s ease-in-out infinite;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: overlay;
+  z-index: -1;
+  border-radius: 100px;
+}
+
+@keyframes iridescent {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .summer-button:hover {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.15) 100%);
   box-shadow: 
-    0 12px 48px rgba(0, 0, 0, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    0 12px 40px rgba(255, 255, 255, 0.25),
+    0 8px 24px rgba(255, 255, 255, 0.15),
+    inset 0 2px 6px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .summer-button:hover::after {
   opacity: 1;
+  transform: rotate(45deg) translateX(100%);
+}
+
+.summer-button:hover::before {
+  opacity: 0.7;
 }
 
 .summer-button:active {
@@ -409,43 +451,47 @@ body {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.ticket-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-  opacity: 0.8;
-  z-index: -1;
-  border-radius: 16px;
+/* Individual button bubble tints */
+.ticket-button {
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 107, 0.2) 0%, 
+    rgba(255, 142, 83, 0.1) 50%,
+    rgba(255, 255, 255, 0.1) 100%) !important;
 }
 
-.booking-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  opacity: 0.8;
-  z-index: -1;
-  border-radius: 16px;
+.ticket-button:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 107, 0.3) 0%, 
+    rgba(255, 142, 83, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 100%) !important;
 }
 
-.telegram-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #0088cc, #0099ff);
-  opacity: 0.8;
-  z-index: -1;
-  border-radius: 16px;
+.booking-button {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.2) 0%, 
+    rgba(118, 75, 162, 0.1) 50%,
+    rgba(255, 255, 255, 0.1) 100%) !important;
+}
+
+.booking-button:hover {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.3) 0%, 
+    rgba(118, 75, 162, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 100%) !important;
+}
+
+.telegram-button {
+  background: linear-gradient(135deg, 
+    rgba(0, 136, 204, 0.2) 0%, 
+    rgba(0, 153, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.1) 100%) !important;
+}
+
+.telegram-button:hover {
+  background: linear-gradient(135deg, 
+    rgba(0, 136, 204, 0.3) 0%, 
+    rgba(0, 153, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 100%) !important;
 }
 
 /* Booking Submenu */
@@ -801,34 +847,65 @@ body {
 }
 
 .buy-ticket-button {
-  background: #fff !important;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 200, 200, 0.9) 50%,
+    rgba(255, 255, 255, 0.95) 100%) !important;
   color: #000 !important;
   font-size: 1rem !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   font-family: 'Inter', sans-serif !important;
   text-transform: uppercase !important;
   letter-spacing: 1.5px !important;
-  padding: 1.25rem 2.5rem !important;
+  padding: 1.5rem 3rem !important;
   border: none !important;
   border-radius: 100px !important;
   cursor: pointer !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
   box-shadow: 
-    0 4px 24px rgba(255, 255, 255, 0.2),
-    0 1px 3px rgba(255, 255, 255, 0.1) !important;
+    0 8px 32px rgba(255, 255, 255, 0.3),
+    0 4px 16px rgba(255, 107, 107, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(255, 200, 200, 0.3) !important;
   display: block !important;
   width: 100% !important;
   text-decoration: none !important;
   text-align: center !important;
   line-height: 1.4 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.buy-ticket-button::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -50% !important;
+  left: -50% !important;
+  width: 200% !important;
+  height: 200% !important;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 70%) !important;
+  transform: rotate(45deg) translateX(-100%) !important;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) !important;
 }
 
 .buy-ticket-button:hover {
-  transform: translateY(-2px) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 220, 220, 0.95) 50%,
+    rgba(255, 255, 255, 1) 100%) !important;
   box-shadow: 
-    0 8px 32px rgba(255, 255, 255, 0.3),
-    0 2px 8px rgba(255, 255, 255, 0.15) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
+    0 12px 40px rgba(255, 255, 255, 0.4),
+    0 6px 20px rgba(255, 107, 107, 0.3),
+    inset 0 2px 6px rgba(255, 255, 255, 1),
+    inset 0 -2px 6px rgba(255, 200, 200, 0.4) !important;
+}
+
+.buy-ticket-button:hover::before {
+  transform: rotate(45deg) translateX(100%) !important;
 }
 
 .buy-ticket-button:active {
