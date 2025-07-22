@@ -215,15 +215,12 @@ FC/DC 18+
               e.stopPropagation();
               console.log('[TC Debug] Manual buy button clicked');
               
-              // Create a synthetic event that bubbles up properly
-              const clickEvent = new MouseEvent('click', {
-                view: window,
-                bubbles: true,
-                cancelable: true
-              });
-              
-              // Dispatch the event on the wrapper which has the TC attributes
-              tcWrapper.dispatchEvent(clickEvent);
+              // Try direct window.open as fallback for TC widget
+              if (!document.querySelector('.tc-widget-frame_popup')) {
+                console.log('[TC Debug] No TC popup found, opening direct link');
+                const tcUrl = `https://ticketscloud.com/v1/widgets/common?event=${event.tcEvent}&token=${event.tcToken}&partner=63206ee787490997c592a6697`;
+                window.open(tcUrl, '_blank', 'width=600,height=800');
+              }
             };
             
             tcButton.removeEventListener('click', handleBuyClick);
@@ -248,11 +245,19 @@ FC/DC 18+
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
     
-    // Use the same pattern as vnvnc-project-clean
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.open('tel:+79214104440', '_blank');
+    // Check if on desktop (not in Telegram WebApp and screen is wide enough)
+    const isDesktop = !window.Telegram?.WebApp && window.innerWidth > 768;
+    
+    if (isDesktop) {
+      // Open booking form on desktop
+      window.open('https://noteforms.com/forms/bron-stolov-v-vnvnc-concert-hall-moou17', '_blank');
     } else {
-      window.location.href = 'tel:+79214104440';
+      // Use phone number on mobile/Telegram
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.open('tel:+79214104440', '_blank');
+      } else {
+        window.location.href = 'tel:+79214104440';
+      }
     }
   }
 
