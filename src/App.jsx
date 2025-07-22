@@ -251,8 +251,13 @@ FC/DC 18+
     if (window.Telegram?.WebApp?.HapticFeedback) {
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
-    // Direct phone call without using Telegram instant view
-    window.location.href = 'tel:+79214104440';
+    
+    // Use the same pattern as vnvnc-project-clean
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.open('tel:+79214104440', '_blank');
+    } else {
+      window.location.href = 'tel:+79214104440';
+    }
   }
 
   // Removed unused phone and bot functions
