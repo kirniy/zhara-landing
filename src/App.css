@@ -15,24 +15,32 @@ body {
 
 /* Circle Video */
 .circle-video-wrapper {
-  width: 150px;
-  height: 150px;
-  margin: 20px auto;
+  width: 250px;
+  height: 250px;
+  margin: -20px auto 30px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 153, 255, 0.3);
+  box-shadow: 
+    0 0 0 4px rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 153, 255, 0.4),
+    inset 0 0 20px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
   background: #000;
   position: relative;
+  border: 2px solid rgba(0, 153, 255, 0.3);
 }
 
 .circle-video-wrapper.expanded {
-  width: 250px;
-  height: 250px;
-  margin: 30px auto;
-  transform: scale(1.1);
-  box-shadow: 0 12px 48px rgba(0, 153, 255, 0.5);
+  width: 350px;
+  height: 350px;
+  margin: -30px auto 40px;
+  transform: scale(1.05);
+  box-shadow: 
+    0 0 0 6px rgba(255, 255, 255, 0.2),
+    0 12px 48px rgba(0, 153, 255, 0.6),
+    inset 0 0 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 153, 255, 0.5);
 }
 
 .circle-video {
@@ -47,21 +55,28 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
 .circle-video-wrapper:hover .circle-video-overlay {
-  opacity: 1;
+  opacity: 0.9;
 }
 
 .circle-video-overlay svg {
   color: white;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+  transition: transform 0.2s ease;
+}
+
+.circle-video-wrapper:hover .circle-video-overlay svg {
+  transform: scale(1.1);
 }
 
 /* Splash Screen */

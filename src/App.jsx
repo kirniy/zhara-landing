@@ -10,7 +10,6 @@ function App() {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [eventVideoMuted, setEventVideoMuted] = useState(true)
   const [showFullscreenVideo, setShowFullscreenVideo] = useState(false)
-  const [showBookingSubmenu, setShowBookingSubmenu] = useState(false)
   const [showSplash, setShowSplash] = useState(true)
   const [bubblesAnimation, setBubblesAnimation] = useState(true)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
@@ -18,7 +17,6 @@ function App() {
   const [mediaLoaded, setMediaLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
   const bookingBtnRef = useRef(null)
-  const submenuRef = useRef(null)
   const circleVideoRef = useRef(null)
   const bgVideoRef = useRef(null)
 
@@ -28,6 +26,16 @@ function App() {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.setHeaderColor('#f6121a');
     }
+    
+    // Debug TC widget loading
+    console.log('[TC Debug] Page loaded, checking TC widget...');
+    console.log('[TC Debug] TC widget script tag:', document.querySelector('script[src*="tcwidget"]'));
+    console.log('[TC Debug] window.ticketsCloudWidget on load:', window.ticketsCloudWidget);
+    
+    // Wait a bit and check again
+    setTimeout(() => {
+      console.log('[TC Debug] After 1s - window.ticketsCloudWidget:', window.ticketsCloudWidget);
+    }, 1000);
     
     // Dispatch custom userGesture event on first actual user interaction to unlock videos
     const gestureHandler = () => {
@@ -79,19 +87,7 @@ function App() {
     });
   }, [])
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (showBookingSubmenu && 
-          bookingBtnRef.current && 
-          !bookingBtnRef.current.contains(e.target) &&
-          submenuRef.current &&
-          !submenuRef.current.contains(e.target)) {
-        setShowBookingSubmenu(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [showBookingSubmenu])
+  // Removed booking submenu click outside handler
 
   const events = [
     {
@@ -186,6 +182,10 @@ FC/DC 18+
   }
 
   const handleEventSelect = (event) => {
+    console.log('[TC Debug] Event selected:', event.title);
+    console.log('[TC Debug] TC Event ID:', event.tcEvent);
+    console.log('[TC Debug] TC Token:', event.tcToken);
+    
     if (window.Telegram?.WebApp?.HapticFeedback) {
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
@@ -195,16 +195,36 @@ FC/DC 18+
     
     // Re-initialize TC widget for dynamically added elements
     setTimeout(() => {
+      console.log('[TC Debug] Checking TC widget availability...');
+      console.log('[TC Debug] window.ticketsCloudWidget:', window.ticketsCloudWidget);
+      
+      // Find the TC wrapper element
+      const tcWrapper = document.querySelector('[data-tc-event="' + event.tcEvent + '"]');
+      console.log('[TC Debug] TC wrapper element found:', tcWrapper);
+      
       if (window.ticketsCloudWidget && window.ticketsCloudWidget.init) {
+        console.log('[TC Debug] Calling ticketsCloudWidget.init()');
         window.ticketsCloudWidget.init();
       } else if (window.ticketsCloudWidget && window.ticketsCloudWidget.destroy) {
+        console.log('[TC Debug] Init not available, trying destroy/reinit approach');
         // If init doesn't work, try destroy and let it reinitialize
         window.ticketsCloudWidget.destroy();
         setTimeout(() => {
           // Force re-run the widget initialization by dispatching a DOM ready event
+          console.log('[TC Debug] Dispatching DOMContentLoaded event');
           document.dispatchEvent(new Event('DOMContentLoaded'));
         }, 50);
+      } else {
+        console.log('[TC Debug] TC widget not available at all');
       }
+      
+      // Check if widget picked up our element after init
+      setTimeout(() => {
+        const tcButton = tcWrapper?.querySelector('button');
+        console.log('[TC Debug] Button inside TC wrapper:', tcButton);
+        console.log('[TC Debug] TC wrapper classes:', tcWrapper?.className);
+        console.log('[TC Debug] TC wrapper parent:', tcWrapper?.parentNode);
+      }, 200);
     }, 100);
   }
 
@@ -212,28 +232,14 @@ FC/DC 18+
     if (window.Telegram?.WebApp?.HapticFeedback) {
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
-    setShowBookingSubmenu(!showBookingSubmenu);
-  }
-
-  const openPhoneNumber = () => {
-    window.Telegram?.WebApp?.HapticFeedback?.impactOccurred('light');
     if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
       window.Telegram.WebApp.openTelegramLink('https://t.me/iv?url=tel:+79214104440');
     } else {
       window.location.href = 'tel:+79214104440';
     }
-    setShowBookingSubmenu(false);
   }
 
-  const openTelegramBot = () => {
-    window.Telegram?.WebApp?.HapticFeedback?.impactOccurred('light');
-    if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
-      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvncbattlebot');
-    } else {
-      window.open('https://t.me/vnvncbattlebot', '_blank');
-    }
-    setShowBookingSubmenu(false);
-  }
+  // Removed unused phone and bot functions
 
   const openTelegramChannel = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
@@ -357,26 +363,10 @@ FC/DC 18+
             <span>БИЛЕТЫ</span>
           </button>
           
-          <div style={{ position: 'relative', width: '100%' }}>
-            <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
-              <Calendar size={24} className="button-icon" />
-              <span>БРОНЬ СТОЛОВ</span>
-            </button>
-            
-            {/* Booking Submenu */}
-            {showBookingSubmenu && (
-              <div className="booking-submenu" ref={submenuRef}>
-                <button onClick={openPhoneNumber} className="submenu-item">
-                  <Phone size={20} />
-                  <span>Позвонить</span>
-                </button>
-                <button onClick={openTelegramBot} className="submenu-item">
-                  <MessageCircle size={20} />
-                  <span>Telegram бот</span>
-                </button>
-              </div>
-            )}
-          </div>
+          <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
+            <Calendar size={24} className="button-icon" />
+            <span>БРОНЬ СТОЛОВ</span>
+          </button>
 
           <button className="summer-button telegram-button" onClick={openTelegramChannel}>
             <Send size={24} className="button-icon" />
