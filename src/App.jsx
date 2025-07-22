@@ -287,6 +287,8 @@ FC/DC 18+
       window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
     }
     setShowFullscreenVideo(true)
+    // Mute circle video to prevent simultaneous sound
+    setCircleVideoMuted(true)
   }
 
   const closeFullscreenVideo = () => {
@@ -441,9 +443,6 @@ FC/DC 18+
                 playsInline
               />
               <div className="video-controls">
-                <button onClick={toggleEventMute} className="control-button">
-                  {eventVideoMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                </button>
                 <button onClick={showFullscreen} className="control-button">
                   <Maximize2 size={20} />
                 </button>
@@ -453,7 +452,7 @@ FC/DC 18+
             <div className="event-info">
               <div className="event-info-content">
                 <h3 className="event-title">{selectedEvent.title}</h3>
-                <p className="event-date-time">{selectedEvent.date.split(', ')[1].charAt(0).toUpperCase() + selectedEvent.date.split(', ')[1].slice(1)} в {selectedEvent.time}</p>
+                <p className="event-date-time">{selectedEvent.date.split(', ')[1].charAt(0).toUpperCase() + selectedEvent.date.split(', ')[1].slice(1)}, {selectedEvent.time}</p>
                 
                 {selectedEvent.activities && (
                   <div className="activities-section">
