@@ -45,12 +45,10 @@ function App() {
     // Randomly select circle video
     setCircleVideoSrc(Math.random() < 0.5 ? '/circle1.mp4' : '/circle2.mp4');
     
-    // Preload all media assets
+    // Preload only critical assets (not bgvideo - let it load in background)
     const mediaAssets = [
-      '/zharaloader.svg',
-      '/bgvideo.mp4',
-      '/poster.webm'
-      // Don't preload circle videos - load on demand
+      '/zharaloader.svg'
+      // Don't preload videos - they can load after splash
     ];
     
     let loadedCount = 0;
@@ -75,13 +73,11 @@ function App() {
         img.onload = checkAllLoaded;
         img.onerror = checkAllLoaded; // Count errors too to avoid infinite loading
         img.src = src;
-      } else if (src.endsWith('.mp4') || src.endsWith('.webm')) {
-        // For videos, we just check if they can start loading
-        const video = document.createElement('video');
-        video.onloadeddata = checkAllLoaded;
-        video.onerror = checkAllLoaded;
-        video.src = src;
-        video.load();
+      } else if (src.endsWith('.svg')) {
+        const img = new Image();
+        img.onload = checkAllLoaded;
+        img.onerror = checkAllLoaded;
+        img.src = src;
       }
     });
   }, [])
