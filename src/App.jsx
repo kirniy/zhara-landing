@@ -42,9 +42,8 @@ function App() {
     const mediaAssets = [
       '/logozhara.png',
       '/bgvideo.mp4',
-      '/circle1.mp4',
-      '/circle2.mp4',
       '/poster.webm'
+      // Don't preload circle videos - load on demand
     ];
     
     let loadedCount = 0;
@@ -234,9 +233,9 @@ FC/DC 18+
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
     if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
-      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvnc_club');
+      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvncbattlebot');
     } else {
-      window.open('https://t.me/vnvnc_club', '_blank');
+      window.open('https://t.me/vnvncbattlebot', '_blank');
     }
   }
 
@@ -276,7 +275,7 @@ FC/DC 18+
         <div className={`splash-screen ${mediaLoaded ? 'hide' : ''}`}>
           <div className="splash-content">
             <img 
-              src={logoImage} 
+              src="/zharaloader.svg" 
               alt="ЖАРА" 
               className="splash-logo"
             />
@@ -346,10 +345,16 @@ FC/DC 18+
 
         {/* Main Buttons */}
         <div className="main-buttons">
-          <button className="summer-button ticket-button" onClick={handleTicketClick}>
-            <Ticket size={24} className="button-icon" />
-            <span>БИЛЕТЫ</span>
-          </button>
+          <div
+            data-tc-event="687267a052cc6634496104ba"
+            data-tc-token="eyJhbGciOiJIUzI1NiIsImlzcyI6InRpY2tldHNjbG91ZC5ydSIsInR5cCI6IkpXVCJ9.eyJwIjoiNjMyMDZlZTc4NzQ5MDk3YzU5MmE2Njk3In0.o8XKf5PO_f33Eg3RIeUe2PYBEeuy4o2yI4vh6qQ21T8"
+            style={{ display: 'inline-block' }}
+          >
+            <button className="summer-button ticket-button">
+              <Ticket size={24} className="button-icon" />
+              <span>БИЛЕТЫ</span>
+            </button>
+          </div>
           
           <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
             <Calendar size={24} className="button-icon" />
