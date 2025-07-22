@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Sun, Droplets, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, MessageCircle } from 'lucide-react'
+import { Ticket, Calendar, Send, Volume2, VolumeX, Maximize2, X, Waves, Phone, MessageCircle } from 'lucide-react'
 import './App.css'
 import AnimatedMedia from '@/components/AnimatedMedia.jsx'
 
@@ -15,14 +15,12 @@ function App() {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [eventVideoMuted, setEventVideoMuted] = useState(true)
   const [showFullscreenVideo, setShowFullscreenVideo] = useState(false)
-  const [musicPlaying, setMusicPlaying] = useState(false)
   const [showBookingSubmenu, setShowBookingSubmenu] = useState(false)
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false)
   const [showSplash, setShowSplash] = useState(true)
   const [bubblesAnimation, setBubblesAnimation] = useState(true)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
   const [circleVideoSrc, setCircleVideoSrc] = useState(null)
-  const audioRef = useRef(null)
   const bookingBtnRef = useRef(null)
   const submenuRef = useRef(null)
   const circleVideoRef = useRef(null)
@@ -213,19 +211,6 @@ FC/DC 18+
     }
   }
 
-  const toggleMusic = () => {
-    if (window.Telegram?.WebApp?.HapticFeedback) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-    }
-    if (audioRef.current) {
-      if (musicPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
-      }
-      setMusicPlaying(!musicPlaying)
-    }
-  }
 
   const toggleEventMute = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
@@ -326,17 +311,17 @@ FC/DC 18+
         {/* Main Buttons */}
         <div className="main-buttons">
           <button className="summer-button ticket-button" onClick={handleTicketClick}>
-            <span className="button-icon">🎫</span>
+            <Ticket size={24} className="button-icon" />
             <span>БИЛЕТЫ</span>
           </button>
           
           <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
-            <span className="button-icon">🍹</span>
+            <Calendar size={24} className="button-icon" />
             <span>БРОНЬ СТОЛОВ</span>
           </button>
 
           <button className="summer-button telegram-button" onClick={openTelegramChannel}>
-            <span className="button-icon">💬</span>
+            <Send size={24} className="button-icon" />
             <span>TELEGRAM</span>
           </button>
         </div>
@@ -355,12 +340,6 @@ FC/DC 18+
           </div>
         )}
 
-        {/* Water Elements Decoration */}
-        <div className="water-elements">
-          <Droplets className="water-drop drop-1" size={30} />
-          <Droplets className="water-drop drop-2" size={25} />
-          <Droplets className="water-drop drop-3" size={35} />
-        </div>
       </div>
 
       {/* Ticket Menu */}
@@ -473,13 +452,6 @@ FC/DC 18+
         </div>
       )}
 
-      {/* Music Button */}
-      <button className="music-button" onClick={toggleMusic}>
-        {musicPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-      </button>
-
-      {/* Audio Element */}
-      <audio ref={audioRef} src="/summer-music.mp3" loop />
     </>
   )
 }

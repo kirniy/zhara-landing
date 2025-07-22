@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Bebas+Neue&family=Russo+One&display=swap&subset=cyrillic');
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   overflow: hidden;
   background: #000;
   color: #fff;
@@ -34,15 +34,19 @@ body {
 }
 
 .splash-title {
-  font-size: 5rem;
-  font-weight: 800;
+  font-size: 6rem;
+  font-weight: 400;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 4px;
   margin-bottom: 0.5rem;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
 .splash-subtitle {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Russo One', sans-serif;
+  letter-spacing: 1px;
   opacity: 0.9;
 }
 
@@ -113,22 +117,30 @@ body {
 /* Circle Video */
 .circle-video-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 150px;
-  height: 150px;
+  bottom: 30px;
+  right: 30px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 100;
-  box-shadow: 0 0 30px rgba(0, 153, 255, 0.6);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .circle-video-container.expanded {
-  width: 200px;
-  height: 200px;
-  transform: scale(1.1);
+  width: 180px;
+  height: 180px;
+  transform: scale(1.05);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .circle-video {
@@ -146,8 +158,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
-  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  transition: all 0.3s ease;
 }
 
 .circle-video-overlay svg {
@@ -200,76 +213,114 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 1.5rem 2rem;
-  font-size: 1.2rem;
-  font-weight: 700;
+  gap: 0.75rem;
+  padding: 1.25rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-family: 'Russo One', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   border: none;
-  border-radius: 50px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
   color: #fff;
-  background: linear-gradient(135deg, #0099ff, #00ccff);
-  box-shadow: 0 5px 20px rgba(0, 153, 255, 0.4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    rgba(255, 255, 255, 0.1) 40%, 
+    rgba(255, 255, 255, 0.05) 100%);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.summer-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 153, 255, 0.6);
-}
-
-.summer-button:active {
-  transform: translateY(0);
-}
-
-.summer-button::before {
+.summer-button::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.summer-button:hover::before {
-  left: 100%;
+.summer-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.summer-button:hover::after {
+  opacity: 1;
+}
+
+.summer-button:active {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .button-icon {
-  font-size: 1.5rem;
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.ticket-button {
+.ticket-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-  box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+  opacity: 0.8;
+  z-index: -1;
+  border-radius: 16px;
 }
 
-.ticket-button:hover {
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
-}
-
-.booking-button {
+.booking-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(135deg, #667eea, #764ba2);
-  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+  opacity: 0.8;
+  z-index: -1;
+  border-radius: 16px;
 }
 
-.booking-button:hover {
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
-}
-
-.telegram-button {
+.telegram-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(135deg, #0088cc, #0099ff);
-  box-shadow: 0 5px 20px rgba(0, 136, 204, 0.4);
-}
-
-.telegram-button:hover {
-  box-shadow: 0 10px 30px rgba(0, 136, 204, 0.6);
+  opacity: 0.8;
+  z-index: -1;
+  border-radius: 16px;
 }
 
 /* Booking Submenu */
@@ -319,51 +370,6 @@ body {
   }
 }
 
-/* Water Elements Decoration */
-.water-elements {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.water-drop {
-  position: absolute;
-  color: rgba(0, 153, 255, 0.6);
-  animation: drip 4s ease-in-out infinite;
-}
-
-.drop-1 {
-  top: 10%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.drop-2 {
-  top: 20%;
-  right: 15%;
-  animation-delay: 1.5s;
-}
-
-.drop-3 {
-  bottom: 30%;
-  left: 20%;
-  animation-delay: 3s;
-}
-
-@keyframes drip {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(30px) scale(1.2);
-    opacity: 1;
-  }
-}
 
 /* Ticket Menu */
 .ticket-menu-overlay {
@@ -402,8 +408,10 @@ body {
 }
 
 .ticket-menu-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
   background: linear-gradient(45deg, #0099ff, #ff6b6b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -454,8 +462,10 @@ body {
 }
 
 .event-item h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  font-family: 'Russo One', sans-serif;
+  letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }
 
@@ -549,8 +559,10 @@ body {
 }
 
 .event-title {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 400;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
   margin-bottom: 1rem;
   background: linear-gradient(45deg, #0099ff, #ff6b6b);
   -webkit-background-clip: text;
@@ -608,16 +620,20 @@ body {
 .buy-ticket-button {
   background: linear-gradient(135deg, #ff6b6b, #ff8e53);
   color: #fff;
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 800;
+  font-family: 'Russo One', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   padding: 1.5rem 3rem;
   border: none;
-  border-radius: 50px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    0 8px 32px rgba(255, 107, 107, 0.3),
+    0 2px 8px rgba(255, 107, 107, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .buy-ticket-button:hover {
@@ -669,31 +685,6 @@ body {
   object-fit: contain;
 }
 
-/* Music Button */
-.music-button {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 100;
-}
-
-.music-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1);
-}
 
 /* Animations */
 @keyframes fadeIn {
