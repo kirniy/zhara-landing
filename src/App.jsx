@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Sun, Droplets, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, MessageCircle } from 'lucide-react'
+import { Sun, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, Globe } from 'lucide-react'
 import './App.css'
 import AnimatedMedia from '@/components/AnimatedMedia.jsx'
 
@@ -181,13 +181,9 @@ FC/DC 18+
     setShowBookingSubmenu(false);
   }
 
-  const openTelegramBot = () => {
+  const openBookingWebsite = () => {
     window.Telegram?.WebApp?.HapticFeedback?.impactOccurred('light');
-    if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
-      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvncbattlebot');
-    } else {
-      window.open('https://t.me/vnvncbattlebot', '_blank');
-    }
+    window.open('https://vnvnc.ru/reservations', '_blank');
     setShowBookingSubmenu(false);
   }
 
@@ -196,9 +192,9 @@ FC/DC 18+
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
     }
     if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
-      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvnc_club');
+      window.Telegram.WebApp.openTelegramLink('https://t.me/vnvnc_spb');
     } else {
-      window.open('https://t.me/vnvnc_club', '_blank');
+      window.open('https://t.me/vnvnc_spb', '_blank');
     }
   }
 
@@ -286,25 +282,6 @@ FC/DC 18+
         </div>
       )}
 
-      {/* Circle Video */}
-      {circleVideoSrc && (
-        <div className={`circle-video-container ${!circleVideoMuted ? 'expanded' : ''}`}>
-          <video 
-            ref={circleVideoRef}
-            className="circle-video"
-            src={circleVideoSrc}
-            autoPlay
-            loop
-            muted={circleVideoMuted}
-            playsInline
-            onClick={toggleCircleVideoMute}
-          />
-          <div className="circle-video-overlay" onClick={toggleCircleVideoMute}>
-            {circleVideoMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-          </div>
-        </div>
-      )}
-
       {/* Main Content Container */}
       <div className="app-container">
         {/* Summer Logo */}
@@ -313,6 +290,25 @@ FC/DC 18+
           <h1 className="logo-text">ЖАРА</h1>
           <div className="logo-subtitle">ПЕННАЯ ВЕЧЕРИНКА</div>
         </div>
+
+        {/* Circle Video - Positioned under logo */}
+        {circleVideoSrc && (
+          <div className={`circle-video-wrapper ${!circleVideoMuted ? 'expanded' : ''}`}>
+            <video 
+              ref={circleVideoRef}
+              className="circle-video"
+              src={circleVideoSrc}
+              autoPlay
+              loop
+              muted={circleVideoMuted}
+              playsInline
+              onClick={toggleCircleVideoMute}
+            />
+            <div className="circle-video-overlay" onClick={toggleCircleVideoMute}>
+              {circleVideoMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+            </div>
+          </div>
+        )}
 
         {/* Main Buttons */}
         <div className="main-buttons">
@@ -339,19 +335,12 @@ FC/DC 18+
               <Phone size={20} />
               <span>Позвонить</span>
             </button>
-            <button onClick={openTelegramBot} className="submenu-item">
-              <MessageCircle size={20} />
-              <span>Telegram бот</span>
+            <button onClick={openBookingWebsite} className="submenu-item">
+              <Globe size={20} />
+              <span>Сайт бронирования</span>
             </button>
           </div>
         )}
-
-        {/* Water Elements Decoration */}
-        <div className="water-elements">
-          <Droplets className="water-drop drop-1" size={30} />
-          <Droplets className="water-drop drop-2" size={25} />
-          <Droplets className="water-drop drop-3" size={35} />
-        </div>
       </div>
 
       {/* Ticket Menu */}
