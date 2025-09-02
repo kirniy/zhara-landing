@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Sun, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, Globe } from 'lucide-react'
 import './App.css'
-import AnimatedMedia from '@/components/AnimatedMedia.jsx'
 
 // Import video assets
 import bgVideo from '/bgvideo.mp4'
@@ -379,13 +378,13 @@ FC/DC 18+
             </button>
             
             <div className="event-video-container">
-              <AnimatedMedia 
+              <video 
                 className="event-video"
-                mediaSrc={selectedEvent.video}
-                isVideo={true}
+                src={selectedEvent.video}
                 muted={eventVideoMuted}
-                loop={true}
-                autoPlay={true}
+                loop
+                autoPlay
+                playsInline
               />
               <div className="video-controls">
                 <button onClick={toggleEventMute} className="control-button">
@@ -398,38 +397,42 @@ FC/DC 18+
             </div>
             
             <div className="event-info">
-              <h3 className="event-title">{selectedEvent.title}</h3>
-              <p className="event-date-time">{selectedEvent.date} в {selectedEvent.time}</p>
+              <div className="event-info-content">
+                <h3 className="event-title">{selectedEvent.title}</h3>
+                <p className="event-date-time">{selectedEvent.date} в {selectedEvent.time}</p>
+                
+                {selectedEvent.activities && (
+                  <div className="activities-section">
+                    <h4>Активности:</h4>
+                    <ul className="activities-list">
+                      {selectedEvent.activities.map((activity, index) => (
+                        <li key={index}>{activity}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                <p className="event-description">{selectedEvent.description}</p>
+              </div>
               
-              {selectedEvent.activities && (
-                <div className="activities-section">
-                  <h4>Активности:</h4>
-                  <ul className="activities-list">
-                    {selectedEvent.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              <p className="event-description">{selectedEvent.description}</p>
-              
-              <button 
-                className="buy-ticket-button"
-                data-tc-event={selectedEvent.tcEvent}
-                data-tc-token={selectedEvent.tcToken}
-                style={{ width: '100%' }}
-                onClick={() => {
-                  if (!isMobile) {
-                    const url = selectedEvent.id === 'sep5' 
-                      ? 'https://63206ee78749097c592a6697.ticketscloud.org/e/688e104ddc1674ac983de8d6?partner_id=63206ee78749097c592a6697'
-                      : 'https://63206ee78749097c592a6697.ticketscloud.org/e/688e10fadfecc4593a46185e?partner_id=63206ee78749097c592a6697';
-                    window.open(url, '_blank');
-                  }
-                }}
-              >
-                КУПИТЬ БИЛЕТ
-              </button>
+              <div className="event-info-sticky">
+                <button 
+                  className="buy-ticket-button"
+                  data-tc-event={selectedEvent.tcEvent}
+                  data-tc-token={selectedEvent.tcToken}
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    if (!isMobile) {
+                      const url = selectedEvent.id === 'sep5' 
+                        ? 'https://63206ee78749097c592a6697.ticketscloud.org/e/688e104ddc1674ac983de8d6?partner_id=63206ee78749097c592a6697'
+                        : 'https://63206ee78749097c592a6697.ticketscloud.org/e/688e10fadfecc4593a46185e?partner_id=63206ee78749097c592a6697';
+                      window.open(url, '_blank');
+                    }
+                  }}
+                >
+                  КУПИТЬ БИЛЕТ
+                </button>
+              </div>
             </div>
           </div>
         </div>
