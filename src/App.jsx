@@ -310,30 +310,32 @@ FC/DC 18+
             <span>БИЛЕТЫ</span>
           </button>
           
-          <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
-            <Calendar size={24} className="button-icon" />
-            <span>БРОНЬ СТОЛОВ</span>
-          </button>
+          <div style={{ position: 'relative' }}>
+            <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
+              <Calendar size={24} className="button-icon" />
+              <span>БРОНЬ СТОЛОВ</span>
+            </button>
+            
+            {/* Booking Submenu */}
+            {showBookingSubmenu && (
+              <div className="booking-submenu" ref={submenuRef}>
+                <button onClick={openPhoneNumber} className="submenu-item">
+                  <Phone size={20} />
+                  <span>Позвонить</span>
+                </button>
+                <button onClick={openBookingWebsite} className="submenu-item">
+                  <Globe size={20} />
+                  <span>Сайт бронирования</span>
+                </button>
+              </div>
+            )}
+          </div>
 
           <button className="summer-button telegram-button" onClick={openTelegramChannel}>
             <Send size={24} className="button-icon" />
             <span>TELEGRAM</span>
           </button>
         </div>
-
-        {/* Booking Submenu */}
-        {showBookingSubmenu && (
-          <div className="booking-submenu" ref={submenuRef}>
-            <button onClick={openPhoneNumber} className="submenu-item">
-              <Phone size={20} />
-              <span>Позвонить</span>
-            </button>
-            <button onClick={openBookingWebsite} className="submenu-item">
-              <Globe size={20} />
-              <span>Сайт бронирования</span>
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Ticket Menu */}
