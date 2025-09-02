@@ -3,11 +3,11 @@ import { Sun, Droplets, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, Mes
 import './App.css'
 import AnimatedMedia from '@/components/AnimatedMedia.jsx'
 
-// Import video assets - using public folder URLs
-const bgVideo = '/bgvideo.mp4'
-const posterVideo = '/poster.webm'
-const circleVideo1 = '/circle1.mp4'
-const circleVideo2 = '/circle2.mp4'
+// Import video assets
+import bgVideo from '/bgvideo.mp4'
+import posterVideo from '/poster.webm'
+import circleVideo1 from '/circle1.mp4'
+import circleVideo2 from '/circle2.mp4'
 
 function App() {
   const [showTicketMenu, setShowTicketMenu] = useState(false)
