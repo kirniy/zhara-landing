@@ -310,7 +310,7 @@ FC/DC 18+
             <span>БИЛЕТЫ</span>
           </button>
           
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', width: '100%' }}>
             <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
               <Calendar size={24} className="button-icon" />
               <span>БРОНЬ СТОЛОВ</span>
@@ -325,7 +325,7 @@ FC/DC 18+
                 </button>
                 <button onClick={openBookingWebsite} className="submenu-item">
                   <Globe size={20} />
-                  <span>Сайт бронирования</span>
+                  <span>Сайт</span>
                 </button>
               </div>
             )}
