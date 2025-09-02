@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Sun, Music, Volume2, VolumeX, Maximize2, X, Waves, Phone, Globe } from 'lucide-react'
+import { Volume2, VolumeX, Maximize2, X, Waves, Phone, Globe, Ticket, Calendar, Send } from 'lucide-react'
 import './App.css'
 
 // Import video assets
@@ -14,10 +14,10 @@ function App() {
   const [eventVideoMuted, setEventVideoMuted] = useState(true)
   const [showFullscreenVideo, setShowFullscreenVideo] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
-  const [showBookingSubmenu, setShowBookingSubmenu] = useState(false)
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false)
   const [showSplash, setShowSplash] = useState(true)
   const [bubblesAnimation, setBubblesAnimation] = useState(true)
+  const [showBookingSubmenu, setShowBookingSubmenu] = useState(false)
   const [circleVideoMuted, setCircleVideoMuted] = useState(true)
   const [circleVideoSrc, setCircleVideoSrc] = useState(null)
   const audioRef = useRef(null)
@@ -32,9 +32,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    // Set Telegram WebApp header color to summer blue
+    // Set Telegram WebApp header color to red-orange
     if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.setHeaderColor('#0099ff');
+      window.Telegram.WebApp.setHeaderColor('#e93504');
     }
     
     // Dispatch custom userGesture event on first actual user interaction to unlock videos
@@ -186,6 +186,7 @@ FC/DC 18+
     setShowBookingSubmenu(false);
   }
 
+
   const openTelegramChannel = () => {
     if (window.Telegram?.WebApp?.HapticFeedback) {
       window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
@@ -283,14 +284,7 @@ FC/DC 18+
 
       {/* Main Content Container */}
       <div className="app-container">
-        {/* Summer Logo */}
-        <div className="summer-logo">
-          <Sun size={60} className="sun-icon" />
-          <h1 className="logo-text">ЖАРА</h1>
-          <div className="logo-subtitle">ПЕННАЯ ВЕЧЕРИНКА</div>
-        </div>
-
-        {/* Circle Video - Positioned under logo */}
+        {/* Circle Video */}
         {circleVideoSrc && (
           <div className={`circle-video-wrapper ${!circleVideoMuted ? 'expanded' : ''}`}>
             <video 
@@ -312,17 +306,17 @@ FC/DC 18+
         {/* Main Buttons */}
         <div className="main-buttons">
           <button className="summer-button ticket-button" onClick={handleTicketClick}>
-            <span className="button-icon">🎫</span>
+            <Ticket size={24} className="button-icon" />
             <span>БИЛЕТЫ</span>
           </button>
           
           <button className="summer-button booking-button" onClick={handleBookingClick} ref={bookingBtnRef}>
-            <span className="button-icon">🍹</span>
+            <Calendar size={24} className="button-icon" />
             <span>БРОНЬ СТОЛОВ</span>
           </button>
 
           <button className="summer-button telegram-button" onClick={openTelegramChannel}>
-            <span className="button-icon">💬</span>
+            <Send size={24} className="button-icon" />
             <span>TELEGRAM</span>
           </button>
         </div>
